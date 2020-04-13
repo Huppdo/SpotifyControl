@@ -1,0 +1,85 @@
+body {
+    background-color: #181818;
+}
+
+.bottomRight {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
+
+.topRight {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+}
+
+.showBorder {
+    border: 2px white solid;
+}
+
+.main {
+    width: 80vw;
+    height: 25vh;
+    position: absolute;
+    text-align: center;
+    top: 38%;
+    left: 50%;
+    margin-top: -8vh;
+    margin-left: -40vw;
+}
+
+.albumArt {
+
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    right: 50%;
+}
+
+.songInfo {
+    text-align: left;
+    width: 25%;
+    height: 80%;
+    position: absolute;
+    left: 52%;
+    top: 18%;
+    display: inline-block;
+}
+
+p {
+    font-family: proxima_nova,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: white;
+}
+
+.buttonMain {
+    background-color: #1DB954;
+    color: whitesmoke;
+    border: #1DB954 2px solid;
+    width: 95px;
+    height: 65px;
+}
+
+@media only screen and (max-width: 600px) {
+    .main {
+        height: 50vh;
+        top: 25%;
+    }
+    .albumArt {
+        height: 50%;
+        top: 0;
+        position: relative;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0
+    }
+    .songInfo {
+        height: 45%;
+        width: 95%;
+        text-align: center;
+        bottom: 0;
+        top: unset;
+        left: 2.5%
+    }
+}

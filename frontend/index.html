@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Dom's Spotify!</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="modal.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+</head>
+<body>
+    <div class="main">
+        <img id="albumArt" src="" class="albumArt">
+        <div class="songInfo">
+            <p>Dominic is currently listening to:</p>
+            <p id="songTitle"><b>n/a</b></p>
+            <p id="artist">n/a</p>
+        </div>
+    </div>
+    <button class="topRight buttonMain" onclick="showModal()">Play Song</button>
+    <img class="bottomRight" src="Spotify_Logo_RGB_Green.png" height="85">
+    <div id="songInput" class="modal">
+        <div class="modal-content" id="modal-content">
+            <form onsubmit="pickSong();return false" action="#">
+                <label style="display:inline-block; color: white; margin-bottom: 5px" for="trackTitle">Song to Play for Dominic: </label><br>
+                <input style="margin-bottom: 25px" type="text" id="trackTitle" name="trackTitle"><br>
+                <input class="buttonMain" style="height: 30px" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+<script src="modalcontrol.js"></script>
+<script src="apiAccess.js"></script>
+<script>
+    nowPlaying();
+    setInterval(nowPlaying,3000)
+</script>
+
+</html>
