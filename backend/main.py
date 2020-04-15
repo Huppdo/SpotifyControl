@@ -13,7 +13,8 @@ CORS(app)
 canView = True
 canPlay = True
 
-myCode = ""
+myCode = "Bearer"
+refreshCode = ""
 
 @app.route("/nowPlaying")
 def generateNowPlaying():
@@ -38,6 +39,7 @@ def generateNowPlaying():
         sendDict["albumArt"] = respJson["album"]["images"][1]["url"]
         return jsonify(sendDict)
     except:
+        autoReauth()
         sendDict = {
             "song": "Service Currently Disabled",
             "artist": " ",
@@ -66,18 +68,39 @@ def setSong():
         print(playSong.text)
         return jsonify({"status": "200"})
     except:
+        autoReauth()
         return jsonify({"status": "500"})
 
 @app.route("/authenticateUser")
 def authenticate():
     try:
         global myCode
+        global refreshCode
         print(request.args)
         authCode = request.args.get("code")
-        parameters = {"grant_type": "authorization_code", "code": authCode, "redirect_uri": "URLHERE/authenticateUser",
+        parameters = {"grant_type": "authorization_code", "code": authCode, "redirect_uri": "https://spotify.domhupp.space/api/authenticateUser",
                       "client_id": "", "client_secret": ""}
         r = requests.post("https://accounts.spotify.com/api/token", data=parameters)
         print(r.text)
+        accessCode = r.json()["access_token"]
+        refreshCode = r.json()["refresh_token"]
+        with open("control.json", "r") as read_file:
+            data = json.load(read_file)
+        data["auth"] = accessCode
+        with open("control.json", "w") as write_file:
+            json.dump(data, write_file)
+        loadOptions()
+        return jsonify({"status": "200"})
+    except:
+        return jsonify({"status": "500"})
+
+@app.route("/forceReauth")
+def autoReauth():
+    try:
+        parameters = {"grant_type": "refresh_token", "refresh_token": refreshCode,
+                      "client_id": "", "client_secret": ""}
+        r = requests.post("https://accounts.spotify.com/api/token", data=parameters)
+        print(r.json())
         accessCode = r.json()["access_token"]
         with open("control.json", "r") as read_file:
             data = json.load(read_file)
